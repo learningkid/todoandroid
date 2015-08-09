@@ -8,17 +8,55 @@
 
 <div data-role="page">
   <div data-role="header">
-    <h1>Welcome To My Homepage</h1>
+    <h1>Whats on your mind!</h1>
   </div>
 
   <div data-role="main" class="ui-content">
-    <p>I Am Now A Mobile Developer!!</p>
+		<input type="text" name="toDoItem" id="toDoItem" data-clear-btn="true">
+  	     <button id="addToList" class="ui-btn ui-corner-all">add to list</button>  
   </div>
+  <div data-role="content" id="ListDiv">
+  	<ul id="List" data-role="listview"></ul>
+  </div>
+ 
+    <p id="doClearAll"><a id="clearAll" href="javascript:void();">Clear All</a></p>
+  
 
+  
   <div data-role="footer">
-    <h1>Footer Text</h1>
+    <h1></h1>
   </div>
 </div> 
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#addToList").click(function(e) {
+			var inpObj =$('#toDoItem').val();
+			console.log("TT" + inpObj);
+			var itemList = '<li>'+ inpObj + '</li>';
+			$('#List').append(itemList);
+		    $('#List').listview('refresh');
+		    if ( localStorage.getItem('whatsonyourmind') ){
+			    localStorage.setItem("whatsonyourmind", localStorage.getItem('whatsonyourmind')+itemList);	
+		    }else{
+		    	localStorage.setItem("whatsonyourmind", itemList);
+		    }
+		    $('#toDoItem').val("");    
+		});
+		$("#clearAll").click(function(e) {
+			e.preventDefault();
+			localStorage.clear();
+			location.reload();
+		});
+		$('#List').listview();
+		loadToDo();
+		function loadToDo() {
+		  if ( localStorage.getItem('whatsonyourmind') ) {
+		  	$('#List').append(localStorage.getItem('whatsonyourmind'));
+		    $('#List').listview('refresh');
+		  }
+		}
+	});
+	</script>
 </body>
-</html>
+</html
