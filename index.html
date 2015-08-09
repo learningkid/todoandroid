@@ -48,6 +48,12 @@
 			localStorage.clear();
 			location.reload();
 		});
+		$('#List').on('swiperight','li', function(){
+        	localStorage.setItem("whatsonyourmind",localStorage.getItem('whatsonyourmind').replace('<li>'+ $(this).text() + '</li>', "")); 
+        	this.remove();          
+        	$('#List').listview('refresh');
+    	});
+		
 		$('#List').listview();
 		loadToDo();
 		function loadToDo() {
