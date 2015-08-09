@@ -29,7 +29,7 @@
 </div> 
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document).on('pageinit',function() {
 		$("#addToList").click(function(e) {
 			var inpObj =$('#toDoItem').val();
 			console.log("TT" + inpObj);
@@ -48,7 +48,7 @@
 			localStorage.clear();
 			location.reload();
 		});
-		$('#List').on('swiperight','>li', function(){
+		$('#List').on('swiperight','li', function(){
         	localStorage.setItem("whatsonyourmind",localStorage.getItem('whatsonyourmind').replace('<li>'+ $(this).text() + '</li>', "")); 
         	this.remove();          
         	$('#List').listview('refresh');
