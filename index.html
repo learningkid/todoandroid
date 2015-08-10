@@ -16,13 +16,12 @@
   	     <button id="addToList" class="ui-btn ui-corner-all">add to list</button>  
   </div>
   <div data-role="content" id="ListDiv">
-  	<ul id="List" data-role="listview"></ul>
+  	<ul id="List" data-role="listview" data-split-icon="delete" data-split-theme="a"></ul>
   </div>
  
     <p id="doClearAll"><a id="clearAll" href="javascript:void();">Clear All</a></p>
   
 
-  
   <div data-role="footer">
     <h1></h1>
   </div>
@@ -30,9 +29,19 @@
 
 <script type="text/javascript">
 	$(document).on('pageinit',function() {
+	
+	 //$("li").unbind("swiperight");
+
+     /*$("#page").bind("swipeleft",function(event) {
+        $.mobile.changePage('next.html',  {
+            transition : "slide"
+        });
+     });*/
+		
 		$("#addToList").click(function(e) {
 			var inpObj =$('#toDoItem').val();
 			console.log("TT" + inpObj);
+			//var itemList = '<li><a>'+ inpObj + '</a><a>Delete</a></li>';
 			var itemList = '<li>'+ inpObj + '</li>';
 			$('#List').append(itemList);
 		    $('#List').listview('refresh');
@@ -48,12 +57,38 @@
 			localStorage.clear();
 			location.reload();
 		});
+		
+		$.event.special.swipe.scrollSupressionThreshold = 10; // More than this horizontal displacement, and we will suppress scrolling.
+		$.event.special.swipe.horizontalDistanceThreshold = 30; // Swipe horizontal displacement must be more than this.
+		$.event.special.swipe.durationThreshold = 500;  // More time than this, and it isn't a swipe.
+		$.event.special.swipe.verticalDistanceThreshold = 75; // Swipe vertical displacement must be less than this.
+		
 		$('#List').on('swiperight','li', function(){
         	localStorage.setItem("whatsonyourmind",localStorage.getItem('whatsonyourmind').replace('<li>'+ $(this).text() + '</li>', "")); 
         	this.remove();          
         	$('#List').listview('refresh');
     	});
-		
+    	
+		/*$("li").bind('swiperight', function(){
+        	localStorage.setItem("whatsonyourmind",localStorage.getItem('whatsonyourmind').replace('<li>'+ $(this).text() + '</li>', "")); 
+        	this.remove();          
+        	$('#List').listview('refresh');
+    	});
+    	
+		$('#List li').on('swiperight', function () {
+        	console.log("i am"+$(this).text());
+        	//$(this).replaceWith('<li><a href="http://java2s.com/">' + text + '</a></li>')
+    	});
+
+		$("a").click(function () {
+        	console.log("i am"+$(this).text());
+        	//$(this).replaceWith('<li><a href="http://java2s.com/">' + text + '</a></li>')
+    	});
+        function myFunction() {
+		    console.log("i am"+$(this).text());
+		}
+        */
+
 		$('#List').listview();
 		loadToDo();
 		function loadToDo() {
@@ -63,6 +98,11 @@
 		  }
 		}
 	});
+	
+	    function myFunction() {
+		    console.log("i am"+$(this).text());
+		}
+
 	</script>
 </body>
 </html
