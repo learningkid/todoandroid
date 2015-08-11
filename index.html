@@ -32,6 +32,10 @@
 	$.event.special.swipe.horizontalDistanceThreshold = 10; // Swipe horizontal displacement must be more than this.
 	$('#List').on('swiperight','li', function(){
     	localStorage.setItem("whatsonyourmind",localStorage.getItem('whatsonyourmind').replace('<li>'+ $(this).text() + '</li>', "")); 
+    	//this.replace($(this).text(),'<strike>'+ $(this).text() + '</strike>');
+    	//this.addClass('ui-screen-hidden'); 
+    	var listitem = $( this );
+    	listitem.addClass( "ui-btn-down-d" );
     	this.remove();          
     	$('#List').listview('refresh');
 	});
