@@ -1,3 +1,4 @@
+<html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -8,7 +9,7 @@
 
 <div data-role="page">
   <div data-role="header">
-    <h1>Whats on your mind!</h1>
+    <h1>Wish List!</h1>
   </div>
 
   <div data-role="main" class="ui-content">
@@ -16,7 +17,7 @@
   	     <button id="addToList" class="ui-btn ui-corner-all">add to list</button>  
   </div>
   <div data-role="content" id="ListDiv">
-  	<ul id="List" data-role="listview" data-split-icon="delete" data-split-theme="a"></ul>
+  	<ul id="List" data-role="listview"></ul>
   </div>
  
     <p id="doClearAll"><a id="clearAll" href="javascript:void();">Clear All</a></p>
@@ -32,32 +33,22 @@
 	$.event.special.swipe.horizontalDistanceThreshold = 10; // Swipe horizontal displacement must be more than this.
 	$('#List').on('swiperight','li', function(){
     	localStorage.setItem("whatsonyourmind",localStorage.getItem('whatsonyourmind').replace('<li>'+ $(this).text() + '</li>', "")); 
-    	//this.replace($(this).text(),'<strike>'+ $(this).text() + '</strike>');
-    	//this.addClass('ui-screen-hidden'); 
     	var listitem = $( this );
     	listitem.addClass( "ui-screen-hidden" );
     	this.remove();          
     	$('#List').listview('refresh');
-	});
-	 //$("li").unbind("swiperight");
-
-     /*$("#page").bind("swipeleft",function(event) {
-        $.mobile.changePage('next.html',  {
-            transition : "slide"
-        });
-     });*/
-		
+	});		
 		$("#addToList").click(function(e) {
 			var inpObj =$('#toDoItem').val();
-			console.log("TT" + inpObj);
-			//var itemList = '<li><a>'+ inpObj + '</a><a>Delete</a></li>';
-			var itemList = '<li>'+ inpObj + '</li>';
-			$('#List').append(itemList);
-		    $('#List').listview('refresh');
-		    if ( localStorage.getItem('whatsonyourmind') ){
-			    localStorage.setItem("whatsonyourmind", localStorage.getItem('whatsonyourmind')+itemList);	
-		    }else{
-		    	localStorage.setItem("whatsonyourmind", itemList);
+			if($('#toDoItem').val().length>0) {
+				var itemList = '<li>'+ inpObj + '</li>';
+				$('#List').append(itemList);
+			    $('#List').listview('refresh');
+			    if ( localStorage.getItem('whatsonyourmind') ){
+				    localStorage.setItem("whatsonyourmind", localStorage.getItem('whatsonyourmind')+itemList);	
+			    }else{
+			    	localStorage.setItem("whatsonyourmind", itemList);
+			    }
 		    }
 		    $('#toDoItem').val("");    
 		});
@@ -68,31 +59,9 @@
 		});
 		
 		//$.event.special.swipe.scrollSupressionThreshold = 10; // More than this horizontal displacement, and we will suppress scrolling.
-				//$.event.special.swipe.durationThreshold = 500;  // More time than this, and it isn't a swipe.
+		//$.event.special.swipe.durationThreshold = 500;  // More time than this, and it isn't a swipe.
 		//$.event.special.swipe.verticalDistanceThreshold = 75; // Swipe vertical displacement must be less than this.
 		
-
-    	
-		/*$("li").bind('swiperight', function(){
-        	localStorage.setItem("whatsonyourmind",localStorage.getItem('whatsonyourmind').replace('<li>'+ $(this).text() + '</li>', "")); 
-        	this.remove();          
-        	$('#List').listview('refresh');
-    	});
-    	
-		$('#List li').on('swiperight', function () {
-        	console.log("i am"+$(this).text());
-        	//$(this).replaceWith('<li><a href="http://java2s.com/">' + text + '</a></li>')
-    	});
-
-		$("a").click(function () {
-        	console.log("i am"+$(this).text());
-        	//$(this).replaceWith('<li><a href="http://java2s.com/">' + text + '</a></li>')
-    	});
-        function myFunction() {
-		    console.log("i am"+$(this).text());
-		}
-        */
-
 		$('#List').listview();
 		loadToDo();
 		function loadToDo() {
@@ -103,10 +72,6 @@
 		}
 	});
 	
-	    function myFunction() {
-		    console.log("i am"+$(this).text());
-		}
-
 	</script>
 </body>
-</html
+</html>
